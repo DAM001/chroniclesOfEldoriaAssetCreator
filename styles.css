@@ -21,6 +21,34 @@ h1 {
     margin-bottom: 20px;
 }
 
+
+button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
+
+    &:hover {
+        background: #2980b9;
+    }
+}
+
+input,
+textarea {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #7f8c8d;
+    border-radius: 5px;
+    background: #1e1e1e;
+    color: #fff;
+    width: calc(100% - 40px);
+    max-width: var(--max-width);
+}
+
 .grid-container {
     background: #ffffff;
     padding: 5px;
@@ -79,33 +107,6 @@ h1 {
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="gray" d="M3 12l9-9 9 9-9 9-9-9z"/></svg>') center/contain no-repeat;
     background-color: #1e1e1e;
     border: 2px solid gray;
-}
-
-button {
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background: #3498db;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 5px;
-}
-
-button:hover {
-    background: #2980b9;
-}
-
-input,
-textarea {
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #7f8c8d;
-    border-radius: 5px;
-    background: #1e1e1e;
-    color: #fff;
-    width: calc(100% - 40px);
-    max-width: var(--max-width);
 }
 
 @media (max-width: 768px) {
