@@ -35,6 +35,22 @@ button {
     &:hover {
         background: #2980b9;
     }
+
+    &:has(img) {
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+        margin: 20px 5px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &.active {
+        background: rgb(155, 89, 182);
+    }
 }
 
 input,

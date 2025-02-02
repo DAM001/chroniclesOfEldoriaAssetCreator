@@ -237,14 +237,14 @@ function exportImage() {
 // Toggle Move Mode
 function toggleMoveMode() {
     isMoveMode = !isMoveMode;
-    document.getElementById("moveButton").textContent = isMoveMode ? "Move Mode: ON" : "Move Mode: OFF";
+    document.getElementById("moveButton").classList.toggle("active");
 }
 
 // Toggle Fill Mode
 function toggleFillMode() {
     isFillMode = !isFillMode;
     if (isFillMode) isMoveMode = false; // Disable Move Mode when Fill Mode is ON
-    document.getElementById("fillButton").textContent = isFillMode ? "Fill Mode: ON" : "Fill Mode: OFF";
+    document.getElementById("fillButton").classList.toggle("active");
 }
 
 // Add event listeners

@@ -9,25 +9,27 @@
 </head>
 
 <body>
-    <h1>Chronicles of Eldoria - Pixel Art Creator</h1>
+    <p>Chronicles of Eldoria - Pixel Art Creator</p>
+
+    <div class="controls">
+        <button id="undoButton"><img src="./assets/icons/undo.png" alt=""></button>
+        <button id="redoButton"><img src="./assets/icons/redo.png" alt=""></button>
+        <button id="fillButton"><img src="./assets/icons/fill.png" alt=""></button>
+        <button id="moveButton"><img src="./assets/icons/move.png" alt=""></button>
+        <button id="clearButton"><img src="./assets/icons/clear.png" alt=""></button>
+    </div>
 
     <div class="grid-container">
         <div class="grid"></div>
     </div>
     <div class="palette"></div>
-
-    <div class="controls">
-        <button id="fillButton">Fill Mode: OFF</button>
-        <button id="moveButton">Move Mode: OFF</button>
-        <button id="undoButton">Undo</button>
-        <button id="redoButton">Redo</button>
-        <button id="clearButton">Clear</button>
-    </div>
     
-    <p>Save settings</p>
-    <input type="text" id="name" placeholder="Enter image name">
-    <textarea id="description" placeholder="Enter image description"></textarea>
-    <button id="exportButton">Export</button>
+    <div style="display: none;">
+        <p>Save settings</p>
+        <input type="text" id="name" placeholder="Enter image name">
+        <textarea id="description" placeholder="Enter image description"></textarea>
+        <button id="exportButton">Export</button>
+    </div>
 
     <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
 
