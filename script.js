@@ -9,6 +9,8 @@ let pixelData = Array(16 * 16).fill(null);
 const GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
 
+document.onload = saveState();
+
 // Create color palette
 colors.forEach((color, index) => {
     const div = document.createElement("div");
@@ -76,9 +78,10 @@ function fillPixels(startIndex) {
     }
 
     updateGrid();
+    saveState();
 }
 
-// Start drawing or filling
+// Start drawing or filling (modified)
 function startDrawing(e) {
     if (isMoveMode) return;
     const pixel = getPixelFromEvent(e);
@@ -93,7 +96,7 @@ function startDrawing(e) {
     }
 }
 
-// Apply color to a pixel
+// Apply color to a pixel (modified)
 function applyColor(pixel) {
     if (!isDrawing || isMoveMode) return;
     const index = parseInt(pixel.dataset.index);
@@ -101,9 +104,20 @@ function applyColor(pixel) {
     updateGrid();
 }
 
-// Stop drawing
+// Stop drawing (modified)
 function stopDrawing() {
+    if (!isDrawing) return;
+    saveState();
     isDrawing = false;
+}
+
+// Clear Canvas with Confirmation (modified)
+function clearCanvas() {
+    if (confirm("Are you sure you want to clear the canvas?")) {
+        saveState(); // Save before clearing
+        pixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
+        updateGrid();
+    }
 }
 
 // Get pixel from event
@@ -184,6 +198,7 @@ function updateMovePreview() {
     });
 
     pixelData = previewData;
+    saveState(); // Save state after moving
     updateGrid();
 }
 
@@ -216,14 +231,6 @@ function exportImage() {
     link.download = `${name}.png`;
     link.href = dataURL;
     link.click();
-}
-
-// Clear Canvas with Confirmation
-function clearCanvas() {
-    if (confirm("Are you sure you want to clear the canvas?")) {
-        pixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
-        updateGrid();
-    }
 }
 
 // Toggle Move Mode
