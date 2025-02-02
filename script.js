@@ -3,8 +3,8 @@ const grid = document.querySelector(".grid");
 const palette = document.querySelector(".palette");
 let selectedColor = colors[0]; // Default to black
 let isDrawing = false;
-let isMoveMode = false;
 let isFillMode = false;
+let isMoveMode = false;
 let pixelData = Array(16 * 16).fill(null);
 const GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
@@ -14,11 +14,12 @@ colors.forEach((color, index) => {
     const div = document.createElement("div");
     div.classList.add("color");
     div.style.background = color;
-    if (index === 0) div.classList.add("selected");
+    if (index === 0) div.classList.add("selected"); // Default selection
     div.addEventListener("click", () => {
         document.querySelectorAll(".color").forEach(c => c.classList.remove("selected"));
         div.classList.add("selected");
         selectedColor = color;
+        if (isMoveMode) toggleMoveMode();
     });
     palette.appendChild(div);
 });
@@ -48,11 +49,11 @@ function updateGrid() {
     });
 }
 
-// Fill function using Flood Fill algorithm
+// Fill function using Flood Fill
 function fillPixels(startIndex) {
     let targetColor = pixelData[startIndex];
     if (targetColor === selectedColor) return;
-
+    
     let queue = [startIndex];
     let visited = new Set();
     
@@ -68,7 +69,6 @@ function fillPixels(startIndex) {
 
         pixelData[index] = selectedColor === "transparent" ? null : selectedColor;
 
-        // Check neighbors (left, right, top, bottom)
         if (x > 0) queue.push(index - 1);
         if (x < GRID_SIZE - 1) queue.push(index + 1);
         if (y > 0) queue.push(index - GRID_SIZE);
@@ -78,43 +78,63 @@ function fillPixels(startIndex) {
     updateGrid();
 }
 
-// Drawing functions
+// Start drawing or filling
 function startDrawing(e) {
     if (isMoveMode) return;
-    let pixel = e.target.closest(".pixel");
+    const pixel = getPixelFromEvent(e);
     if (!pixel) return;
-    let index = parseInt(pixel.dataset.index);
+    const index = parseInt(pixel.dataset.index);
 
     if (isFillMode) {
         fillPixels(index);
     } else {
         isDrawing = true;
-        applyColor(index);
+        applyColor(pixel);
     }
 }
 
-function applyColor(index) {
+// Apply color to a pixel
+function applyColor(pixel) {
     if (!isDrawing || isMoveMode) return;
+    const index = parseInt(pixel.dataset.index);
     pixelData[index] = selectedColor === "transparent" ? null : selectedColor;
     updateGrid();
 }
 
+// Stop drawing
 function stopDrawing() {
     isDrawing = false;
+}
+
+// Get pixel from event
+function getPixelFromEvent(e) {
+    let clientX, clientY;
+    if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+    }
+    const element = document.elementFromPoint(clientX, clientY);
+    return element?.closest(".pixel");
 }
 
 // Enable swipe painting on mobile
 grid.addEventListener("mousedown", startDrawing);
 grid.addEventListener("mouseover", (e) => {
-    if (isDrawing && !isFillMode) applyColor(parseInt(e.target.dataset.index));
+    const pixel = getPixelFromEvent(e);
+    if (pixel) applyColor(pixel);
 });
 document.addEventListener("mouseup", stopDrawing);
-grid.addEventListener("touchstart", (e) => (e.preventDefault(), startDrawing(e.touches[0])));
+grid.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    startDrawing(e.touches[0]);
+});
 grid.addEventListener("touchmove", (e) => {
     e.preventDefault();
-    let touch = e.touches[0];
-    let element = document.elementFromPoint(touch.clientX, touch.clientY);
-    if (element && element.classList.contains("pixel")) applyColor(parseInt(element.dataset.index));
+    const pixel = getPixelFromEvent(e.touches[0]);
+    if (pixel) applyColor(pixel);
 });
 document.addEventListener("touchend", stopDrawing);
 
@@ -125,7 +145,7 @@ function startMove(e) {
     if (!isMoveMode) return;
     moveStartX = (e.clientX || e.touches[0].clientX);
     moveStartY = (e.clientY || e.touches[0].clientY);
-    newPixelData = [...pixelData];
+    newPixelData = [...pixelData]; // Clone before moving
 
     document.addEventListener("mousemove", moveHandler);
     document.addEventListener("mouseup", stopMove);
@@ -198,16 +218,31 @@ function exportImage() {
     link.click();
 }
 
-// Toggle Functions
+// Clear Canvas with Confirmation
+function clearCanvas() {
+    if (confirm("Are you sure you want to clear the canvas?")) {
+        pixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
+        updateGrid();
+    }
+}
+
+// Toggle Move Mode
 function toggleMoveMode() {
     isMoveMode = !isMoveMode;
     document.getElementById("moveButton").textContent = isMoveMode ? "Move Mode: ON" : "Move Mode: OFF";
 }
 
+// Toggle Fill Mode
 function toggleFillMode() {
     isFillMode = !isFillMode;
+    if (isFillMode) isMoveMode = false; // Disable Move Mode when Fill Mode is ON
     document.getElementById("fillButton").textContent = isFillMode ? "Fill Mode: ON" : "Fill Mode: OFF";
 }
 
 // Add event listeners
+document.getElementById("moveButton").addEventListener("click", toggleMoveMode);
 document.getElementById("fillButton").addEventListener("click", toggleFillMode);
+document.getElementById("clearButton").addEventListener("click", clearCanvas);
+document.getElementById("exportButton").addEventListener("click", exportImage);
+document.addEventListener("mousedown", startMove);
+document.addEventListener("touchstart", startMove);
