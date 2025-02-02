@@ -1,0 +1,115 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #fff;
+    user-select: none;
+    margin: 0;
+    padding: 10px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    background: #1e1e1e;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    overflow: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(16, 20px);
+    grid-template-rows: repeat(16, 20px);
+    background: repeating-conic-gradient(#e0e0e0 0% 25%, #cccccc 0% 50%) 0 0 / 20px 20px;
+    border: 2px solid #7f8c8d;
+}
+
+.pixel {
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    cursor: crosshair;
+    border: 1px solid rgba(189, 195, 199, 0.1);
+
+    &:hover {
+        background-color: rgba(200, 200, 200, 1);
+    }
+}
+
+.palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.color,
+.erase {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+}
+
+.selected {
+    border: 2px solid #fff;
+}
+
+.erase {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="gray" d="M3 12l9-9 9 9-9 9-9-9z"/></svg>') center/contain no-repeat;
+    background-color: #1e1e1e;
+    border: 2px solid gray;
+}
+
+button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+input,
+textarea {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #7f8c8d;
+    border-radius: 5px;
+    background: #1e1e1e;
+    color: #fff;
+    width: 200px;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        max-width: 95vw;
+        max-height: 95vh;
+        padding: 5px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(16, min(5vw, 5vh));
+        grid-template-rows: repeat(16, min(5vw, 5vh));
+        background-size: min(5vw, 5vh) min(5vw, 5vh);
+    }
+
+    .pixel {
+        width: min(5vw, 5vh);
+        height: min(5vw, 5vh);
+    }
+}
