@@ -198,7 +198,6 @@ function updateMovePreview() {
     });
 
     pixelData = previewData;
-    saveState(); // Save state after moving
     updateGrid();
 }
 
@@ -207,6 +206,8 @@ function stopMove() {
     document.removeEventListener("mouseup", stopMove);
     document.removeEventListener("touchmove", moveHandler);
     document.removeEventListener("touchend", stopMove);
+
+    saveState();
 }
 
 // Export to PNG
