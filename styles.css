@@ -1,3 +1,8 @@
+:root {
+    --pixel-size: 40px;
+    --max-width: 430px;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -8,6 +13,8 @@ body {
     user-select: none;
     margin: 0;
     padding: 10px;
+
+    text-align: center;
 }
 
 h1 {
@@ -15,7 +22,7 @@ h1 {
 }
 
 .grid-container {
-    background: #1e1e1e;
+    background: #ffffff;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -25,29 +32,34 @@ h1 {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(16, 20px);
-    grid-template-rows: repeat(16, 20px);
-    background: repeating-conic-gradient(#e0e0e0 0% 25%, #cccccc 0% 50%) 0 0 / 20px 20px;
-    border: 2px solid #7f8c8d;
+    grid-template-columns: repeat(16, var(--pixel-size));
+    grid-template-rows: repeat(16, var(--pixel-size));
+    background: repeating-conic-gradient(#e0e0e0 0% 25%, #cccccc 0% 50%) 0 0 / var(--pixel-size) var(--pixel-size);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .pixel {
-    width: 20px;
-    height: 20px;
+    width: var(--pixel-size);
+    height: var(--pixel-size);
     background: transparent;
     cursor: crosshair;
-    border: 1px solid rgba(189, 195, 199, 0.1);
 
     &:hover {
-        background-color: rgba(200, 200, 200, 1);
+        border: 2px solid white;
+        border-radius: 5px;
+        margin: -2px;
+        z-index: 100;
     }
 }
 
 .palette {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 5px;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    max-width: 430px;
 }
 
 .color,
@@ -92,7 +104,8 @@ textarea {
     border-radius: 5px;
     background: #1e1e1e;
     color: #fff;
-    width: 200px;
+    width: calc(100% - 40px);
+    max-width: var(--max-width);
 }
 
 @media (max-width: 768px) {

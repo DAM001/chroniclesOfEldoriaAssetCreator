@@ -1,7 +1,7 @@
 const colors = ["#000000", "#1abc9c", "#16a085", "#2ecc71", "#27ae60", "#3498db", "#2980b9", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1", "#bdc3c7", "#95a5a6", "#7f8c8d"];
 const grid = document.querySelector(".grid");
 const palette = document.querySelector(".palette");
-let selectedColor = colors[0];
+let selectedColor = colors[0]; // Default to black
 let isDrawing = false;
 let isMoveMode = false;
 let pixelData = Array(16 * 16).fill(null);
@@ -9,14 +9,16 @@ const GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
 
 // Create color palette
-colors.forEach(color => {
+colors.forEach((color, index) => {
     const div = document.createElement("div");
     div.classList.add("color");
     div.style.background = color;
+    if (index === 0) div.classList.add("selected"); // Default selection
     div.addEventListener("click", () => {
         document.querySelectorAll(".color").forEach(c => c.classList.remove("selected"));
         div.classList.add("selected");
         selectedColor = color;
+        if (isMoveMode) toggleMoveMode();
     });
     palette.appendChild(div);
 });
@@ -31,8 +33,6 @@ erase.addEventListener("click", () => {
 });
 palette.appendChild(erase);
 
-palette.children[0].classList.add("selected");
-
 // Create grid
 for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
     const pixel = document.createElement("div");
@@ -41,7 +41,7 @@ for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
     grid.appendChild(pixel);
 }
 
-// Update grid
+// Update grid visuals
 function updateGrid() {
     document.querySelectorAll(".pixel").forEach((pixel, index) => {
         pixel.style.background = pixelData[index] || "transparent";
@@ -81,34 +81,14 @@ grid.addEventListener("touchmove", (e) => {
 });
 document.addEventListener("touchend", stopDrawing);
 
-// Move all pixels together
-function movePixels(deltaX, deltaY) {
-    if (!isMoveMode) return;
-    let newPixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
+// Move all pixels together (fixed speed)
+let moveOffsetX = 0, moveOffsetY = 0, moveStartX, moveStartY, newPixelData;
 
-    pixelData.forEach((color, index) => {
-        if (color) {
-            let x = index % GRID_SIZE;
-            let y = Math.floor(index / GRID_SIZE);
-            let newX = x + deltaX;
-            let newY = y + deltaY;
-
-            if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE) {
-                newPixelData[newY * GRID_SIZE + newX] = color;
-            }
-        }
-    });
-
-    pixelData = newPixelData;
-    updateGrid();
-}
-
-// Handle movement
-let startX, startY;
 function startMove(e) {
     if (!isMoveMode) return;
-    startX = e.clientX || e.touches[0].clientX;
-    startY = e.clientY || e.touches[0].clientY;
+    moveStartX = (e.clientX || e.touches[0].clientX);
+    moveStartY = (e.clientY || e.touches[0].clientY);
+    newPixelData = [...pixelData]; // Clone before moving
 
     document.addEventListener("mousemove", moveHandler);
     document.addEventListener("mouseup", stopMove);
@@ -117,17 +97,37 @@ function startMove(e) {
 }
 
 function moveHandler(e) {
-    let endX = e.clientX || e.touches[0].clientX;
-    let endY = e.clientY || e.touches[0].clientY;
+    let currentX = (e.clientX || e.touches[0].clientX);
+    let currentY = (e.clientY || e.touches[0].clientY);
 
-    let deltaX = Math.round((endX - startX) / PIXEL_SIZE);
-    let deltaY = Math.round((endY - startY) / PIXEL_SIZE);
+    let deltaX = Math.floor((currentX - moveStartX) / PIXEL_SIZE);
+    let deltaY = Math.floor((currentY - moveStartY) / PIXEL_SIZE);
 
-    if (deltaX !== 0 || deltaY !== 0) {
-        movePixels(deltaX, deltaY);
-        startX = endX;
-        startY = endY;
+    if (deltaX !== moveOffsetX || deltaY !== moveOffsetY) {
+        moveOffsetX = deltaX;
+        moveOffsetY = deltaY;
+        updateMovePreview();
     }
+}
+
+function updateMovePreview() {
+    let previewData = Array(GRID_SIZE * GRID_SIZE).fill(null);
+
+    newPixelData.forEach((color, index) => {
+        if (color) {
+            let x = index % GRID_SIZE;
+            let y = Math.floor(index / GRID_SIZE);
+            let newX = x + moveOffsetX;
+            let newY = y + moveOffsetY;
+
+            if (newX >= 0 && newX < GRID_SIZE && newY >= 0 && newY < GRID_SIZE) {
+                previewData[newY * GRID_SIZE + newX] = color;
+            }
+        }
+    });
+
+    pixelData = previewData;
+    updateGrid();
 }
 
 function stopMove() {
