@@ -9,6 +9,8 @@ let pixelData = Array(16 * 16).fill(null);
 const GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
 
+document.onload = saveState();
+
 // Create color palette
 colors.forEach((color, index) => {
     const div = document.createElement("div");
@@ -76,6 +78,7 @@ function fillPixels(startIndex) {
     }
 
     updateGrid();
+    saveState();
 }
 
 // Start drawing or filling
@@ -103,6 +106,8 @@ function applyColor(pixel) {
 
 // Stop drawing
 function stopDrawing() {
+    if (!isDrawing) return;
+    saveState();
     isDrawing = false;
 }
 
@@ -192,6 +197,8 @@ function stopMove() {
     document.removeEventListener("mouseup", stopMove);
     document.removeEventListener("touchmove", moveHandler);
     document.removeEventListener("touchend", stopMove);
+
+    saveState();
 }
 
 // Export to PNG
@@ -227,14 +234,14 @@ function clearCanvas() {
 // Toggle Move Mode
 function toggleMoveMode() {
     isMoveMode = !isMoveMode;
-    document.getElementById("moveButton").textContent = isMoveMode ? "Move Mode: ON" : "Move Mode: OFF";
+    document.getElementById("moveButton").classList.toggle("active");
 }
 
 // Toggle Fill Mode
 function toggleFillMode() {
     isFillMode = !isFillMode;
     if (isFillMode) isMoveMode = false; // Disable Move Mode when Fill Mode is ON
-    document.getElementById("fillButton").textContent = isFillMode ? "Fill Mode: ON" : "Fill Mode: OFF";
+    document.getElementById("fillButton").classList.toggle("active");
 }
 
 // Add event listeners
