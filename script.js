@@ -9,8 +9,6 @@ let pixelData = Array(16 * 16).fill(null);
 const GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
 
-document.onload = saveState();
-
 // Create color palette
 colors.forEach((color, index) => {
     const div = document.createElement("div");
@@ -78,10 +76,9 @@ function fillPixels(startIndex) {
     }
 
     updateGrid();
-    saveState();
 }
 
-// Start drawing or filling (modified)
+// Start drawing or filling
 function startDrawing(e) {
     if (isMoveMode) return;
     const pixel = getPixelFromEvent(e);
@@ -96,7 +93,7 @@ function startDrawing(e) {
     }
 }
 
-// Apply color to a pixel (modified)
+// Apply color to a pixel
 function applyColor(pixel) {
     if (!isDrawing || isMoveMode) return;
     const index = parseInt(pixel.dataset.index);
@@ -104,20 +101,9 @@ function applyColor(pixel) {
     updateGrid();
 }
 
-// Stop drawing (modified)
+// Stop drawing
 function stopDrawing() {
-    if (!isDrawing) return;
-    saveState();
     isDrawing = false;
-}
-
-// Clear Canvas with Confirmation (modified)
-function clearCanvas() {
-    if (confirm("Are you sure you want to clear the canvas?")) {
-        saveState(); // Save before clearing
-        pixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
-        updateGrid();
-    }
 }
 
 // Get pixel from event
@@ -206,8 +192,6 @@ function stopMove() {
     document.removeEventListener("mouseup", stopMove);
     document.removeEventListener("touchmove", moveHandler);
     document.removeEventListener("touchend", stopMove);
-
-    saveState();
 }
 
 // Export to PNG
@@ -221,30 +205,36 @@ function exportImage() {
             const x = index % GRID_SIZE;
             const y = Math.floor(index / GRID_SIZE);
             ctx.fillStyle = color;
-            ctx.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+            ctx.fillRect(x, y, 1, 1); // 1 pixel = 1 pixel
         }
     });
 
     const name = document.getElementById("name").value || "pixel-art";
-    const dataURL = canvas.toDataURL("image/png");
+    const description = document.getElementById("description").value || "";
 
-    const link = document.createElement("a");
-    link.download = `${name}.png`;
-    link.href = dataURL;
-    link.click();
+    // Save image with metadata
+    saveImageWithMetadata(canvas, name, description);
+}
+
+// Clear Canvas with Confirmation
+function clearCanvas() {
+    if (confirm("Are you sure you want to clear the canvas?")) {
+        pixelData = Array(GRID_SIZE * GRID_SIZE).fill(null);
+        updateGrid();
+    }
 }
 
 // Toggle Move Mode
 function toggleMoveMode() {
     isMoveMode = !isMoveMode;
-    document.getElementById("moveButton").classList.toggle("active");
+    document.getElementById("moveButton").textContent = isMoveMode ? "Move Mode: ON" : "Move Mode: OFF";
 }
 
 // Toggle Fill Mode
 function toggleFillMode() {
     isFillMode = !isFillMode;
     if (isFillMode) isMoveMode = false; // Disable Move Mode when Fill Mode is ON
-    document.getElementById("fillButton").classList.toggle("active");
+    document.getElementById("fillButton").textContent = isFillMode ? "Fill Mode: ON" : "Fill Mode: OFF";
 }
 
 // Add event listeners

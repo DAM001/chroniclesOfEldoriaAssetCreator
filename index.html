@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <p>Chronicles of Eldoria - Pixel Art Creator</p>
+    <h1>Chronicles of Eldoria - Pixel Art Creator</h1>
 
     <div class="controls">
         <button id="undoButton"><img src="./assets/icons/undo.png" alt=""></button>
@@ -17,6 +17,7 @@
         <button id="fillButton"><img src="./assets/icons/fill.png" alt=""></button>
         <button id="moveButton"><img src="./assets/icons/move.png" alt=""></button>
         <button id="clearButton"><img src="./assets/icons/clear.png" alt=""></button>
+        <button id="saveButton"><img src="./assets/icons/save.png" alt=""></button>
     </div>
 
     <div class="grid-container">
@@ -24,15 +25,23 @@
     </div>
     <div class="palette"></div>
     
-    <div style="display: none;">
-        <p>Save settings</p>
+    <div id="savePopup" class="popup">
+        <h1>Save settings</h1>
+        <label for="name">File name</label>
         <input type="text" id="name" placeholder="Enter image name">
+        <label for="size">Export scale</label>
+        <input type="number" id="size" placeholder="Enter image size">
+        <label for="description">Description (metadata)</label>
         <textarea id="description" placeholder="Enter image description"></textarea>
-        <button id="exportButton">Export</button>
+        <div class="controls">
+            <button id="exportButton">Export</button>
+            <button id="cancelExportButton">Cancel</button>
+        </div>
     </div>
 
     <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
 
+    <script src="metadata.js"></script>
     <script src="history.js"></script>
     <script src="script.js"></script>
 </body>
