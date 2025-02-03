@@ -205,9 +205,10 @@ function stopMove() {
 function exportImage() {
     const name = document.getElementById("name").value || "pixel-art";
     const description = document.getElementById("description").value || "";
+    const scale = document.getElementById("size").value || 1;
 
     // Save image with metadata
-    saveImageWithMetadata(pixelData, name, description, 10); // Scale factor of 10 for better visibility
+    saveImageWithMetadata(pixelData, name, description, scale);
 }
 
 // Clear Canvas with Confirmation
