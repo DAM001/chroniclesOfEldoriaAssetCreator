@@ -203,24 +203,11 @@ function stopMove() {
 
 // Export to PNG
 function exportImage() {
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    pixelData.forEach((color, index) => {
-        if (color) {
-            const x = index % GRID_SIZE;
-            const y = Math.floor(index / GRID_SIZE);
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y, 1, 1); // 1 pixel = 1 pixel
-        }
-    });
-
     const name = document.getElementById("name").value || "pixel-art";
     const description = document.getElementById("description").value || "";
 
     // Save image with metadata
-    saveImageWithMetadata(canvas, name, description);
+    saveImageWithMetadata(pixelData, name, description, 10); // Scale factor of 10 for better visibility
 }
 
 // Clear Canvas with Confirmation
