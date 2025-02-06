@@ -148,6 +148,11 @@ let moveOffsetX = 0, moveOffsetY = 0, moveStartX, moveStartY, newPixelData;
 
 function startMove(e) {
     if (!isMoveMode) return;
+
+    // Check if the event originated from within the grid
+    const pixel = getPixelFromEvent(e);
+    if (!pixel) return; // Exit if the movement doesn't start on the canvas
+
     moveStartX = (e.clientX || e.touches[0].clientX);
     moveStartY = (e.clientY || e.touches[0].clientY);
     newPixelData = [...pixelData]; // Clone before moving
@@ -223,13 +228,24 @@ function clearCanvas() {
 function toggleMoveMode() {
     isMoveMode = !isMoveMode;
     document.getElementById("moveButton").classList.toggle("active");
+
+    // Disable Paint Mode if Move Mode is active
+    if (isMoveMode) {
+        isDrawing = false; // Stop drawing if Move Mode is activated
+        isFillMode = false; // Disable Fill Mode
+        document.getElementById("fillButton").classList.remove("active");
+    }
 }
 
 // Toggle Fill Mode
 function toggleFillMode() {
     isFillMode = !isFillMode;
-    if (isFillMode) isMoveMode = false; // Disable Move Mode when Fill Mode is ON
     document.getElementById("fillButton").classList.toggle("active");
+
+    // Disable Move Mode if Fill Mode is active
+    if (isFillMode && isMoveMode) {
+        toggleMoveMode();
+    }
 }
 
 // Add event listeners
