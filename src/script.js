@@ -6,7 +6,7 @@ let isDrawing = false;
 let isFillMode = false;
 let isMoveMode = false;
 let pixelData = Array(16 * 16).fill(null);
-const GRID_SIZE = 16;
+let GRID_SIZE = 16;
 const PIXEL_SIZE = 20;
 
 document.onload = saveState();

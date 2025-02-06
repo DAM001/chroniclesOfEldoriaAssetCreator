@@ -12,6 +12,14 @@
     <h1>Chronicles of Eldoria - Pixel Art Creator</h1>
 
     <div class="controls">
+        <div class="dropdown">
+            <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
+            <div class="dropdown-content">
+                <a href="#" data-size="8">8x8 (Tools)</a>
+                <a href="#" data-size="16">16x16 (Mobs)</a>
+            </div>
+        </div>
+
         <button id="undoButton"><img src="./assets/icons/undo.png" alt=""></button>
         <button id="redoButton"><img src="./assets/icons/redo.png" alt=""></button>
         <button id="fillButton"><img src="./assets/icons/fill.png" alt=""></button>
@@ -40,10 +48,11 @@
     </div>
 
     <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
-
+    
     <script src="./src/metadata.js"></script>
     <script src="./src/history.js"></script>
     <script src="./src/script.js"></script>
+    <script src="./src/assetType.js"></script>
 </body>
 
 </html>
