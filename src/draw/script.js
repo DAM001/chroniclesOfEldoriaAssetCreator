@@ -247,7 +247,14 @@ function toggleFillMode() {
     }
 }
 
+// Move back to the main page
+function moveBackToGallery() {
+    document.getElementById("drawing-container").style.display = "none";
+    document.getElementById("gallery-container").style.display = "block";
+}
+
 // Add event listeners
+document.getElementById("backButton").addEventListener("click", moveBackToGallery);
 document.getElementById("saveButton").addEventListener("click", toggleSavePopup);
 document.getElementById("moveButton").addEventListener("click", toggleMoveMode);
 document.getElementById("fillButton").addEventListener("click", toggleFillMode);
@@ -270,6 +277,3 @@ function loadPixelArray(loadData) {
     pixelData = loadData.map(index => (colors[index] !== undefined ? colors[index] : null));
     updateGrid();
 }
-
-
-const testPixelArrayData = [-1, -1, -1, 7, -1, -1, -1, -1, -1, -1, -1, 7, 7, -1, -1, -1, -1, 0, 0, -1, 7, -1, -1, -1, -1, -1, 0, 0, 7, -1, -1, -1, -1, -1, -1, -1, 0, 7, 6, -1, -1, -1, -1, -1, 6, 7, -1, -1, -1, -1, -1, 6, 6, 7, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1];
