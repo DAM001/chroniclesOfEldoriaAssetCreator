@@ -21,8 +21,61 @@
         <button id="login-button">Login</button>
     </div>
 
+    <!-- Main Content -->
+    <div id="gallery-container" class="gallery-container">
+        <div id="gridContainer" class="gallery-container">
+            Loading data from Firebase...
+        </div>
+        <button id="create-button">Create</button>
+    </div>
+
+    <!-- Drawing container -->
+    <div id="drawing-container">
+        <div class="controls">
+            <div class="dropdown" title="Change grid size">
+                <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
+                <div class="dropdown-content">
+                    <a href="#" data-size="8">8x8 (Tools)</a>
+                    <a href="#" data-size="16">16x16 (Mobs)</a>
+                </div>
+            </div>
+
+            <input type="file" id="loadImageInput" accept="image/png" style="display: none;" />
+            <button id="loadImageButton" title="Load Asset"><img src="./assets/icons/load.png" alt=""></button>
+
+            <button id="undoButton" title="Undo"><img src="./assets/icons/undo.png" alt=""></button>
+            <button id="redoButton" title="Redo"><img src="./assets/icons/redo.png" alt=""></button>
+            <button id="fillButton" title="Fill Tool"><img src="./assets/icons/fill.png" alt=""></button>
+            <button id="moveButton" title="Move Tool"><img src="./assets/icons/move.png" alt=""></button>
+            <button id="clearButton" title="Clear Canvas"><img src="./assets/icons/clear.png" alt=""></button>
+            <button id="saveButton" title="Save"><img src="./assets/icons/save.png" alt=""></button>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid"></div>
+        </div>
+        <div class="palette"></div>
+
+        <div id="savePopup" class="popup">
+            <h1>Save settings</h1>
+            <label for="name">File name</label>
+            <input type="text" id="name" placeholder="Enter image name">
+            <label for="size">Export scale</label>
+            <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
+            <label for="description">Description (metadata)</label>
+            <textarea id="description" placeholder="Enter image description"></textarea>
+            <div class="controls">
+                <button id="exportButton">Export</button>
+                <button id="cancelExportButton">Cancel</button>
+            </div>
+        </div>
+
+        <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
+    </div>
+
+
     <!-- Login Popup -->
-    <div id="login-popup" class="popup">
+    <div id="login-popup" class="login-popup">
         <div class="popup-content">
             <span class="close-popup">&times;</span>
             <div id="auth-container">
@@ -48,58 +101,6 @@
                 <button id="google-signin">Sign in with Google</button>
             </div>
         </div>
-    </div>
-
-    <!-- Main Content -->
-    <div id="gallery-container" class="gallery-container">
-        <div id="gridContainer" class="gallery-container">
-            Loading data from Firebase...
-        </div>
-        <button id="create-button">Create</button>
-    </div>
-
-    <!-- Drawing container -->
-    <div id="drawing-container">
-        <div class="controls">
-            <div class="dropdown" title="Change grid size">
-                <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
-                <div class="dropdown-content">
-                    <a href="#" data-size="8">8x8 (Tools)</a>
-                    <a href="#" data-size="16">16x16 (Mobs)</a>
-                </div>
-            </div>
-
-            <input type="file" id="loadImageInput" accept="image/png" style="display: none;" />
-            <button id="loadImageButton" title="Load Asset"><img src="../assets/icons/load.png" alt=""></button>
-
-            <button id="undoButton" title="Undo"><img src="../assets/icons/undo.png" alt=""></button>
-            <button id="redoButton" title="Redo"><img src="../assets/icons/redo.png" alt=""></button>
-            <button id="fillButton" title="Fill Tool"><img src="../assets/icons/fill.png" alt=""></button>
-            <button id="moveButton" title="Move Tool"><img src="../assets/icons/move.png" alt=""></button>
-            <button id="clearButton" title="Clear Canvas"><img src="../assets/icons/clear.png" alt=""></button>
-            <button id="saveButton" title="Save"><img src="../assets/icons/save.png" alt=""></button>
-        </div>
-
-        <div class="grid-container">
-            <div class="grid"></div>
-        </div>
-        <div class="palette"></div>
-
-        <div id="savePopup" class="popup">
-            <h1>Save settings</h1>
-            <label for="name">File name</label>
-            <input type="text" id="name" placeholder="Enter image name">
-            <label for="size">Export scale</label>
-            <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
-            <label for="description">Description (metadata)</label>
-            <textarea id="description" placeholder="Enter image description"></textarea>
-            <div class="controls">
-                <button id="exportButton">Export</button>
-                <button id="cancelExportButton">Cancel</button>
-            </div>
-        </div>
-
-        <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
     </div>
 
     <!-- Firebase Scripts -->

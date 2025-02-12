@@ -57,7 +57,7 @@ body {
     background-color: #218838;
 }
 
-.popup {
+.login-popup {
     display: none;
     position: fixed;
     top: 0;
