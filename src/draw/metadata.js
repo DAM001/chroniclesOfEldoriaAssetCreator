@@ -1,3 +1,15 @@
+function saveImageIntoFirebase(pixelData, name, description) {
+    const drawingData = {
+        "name": name,
+        "description": description,
+        "size": [GRID_SIZE, GRID_SIZE],
+        "tiles": getPixelArray(pixelData),
+        "date": Date.now(),
+        creator: userData.email
+    }
+    firebaseHandler.createDocument("assets", firebaseHandler.generateRandomId(), drawingData).then(console.log);
+}
+
 function saveImageWithMetadata(pixelData, name, description, scale = 1) {
     // Create a canvas
     const canvas = document.createElement("canvas");
@@ -56,6 +68,15 @@ function toggleSavePopup() {
     document.getElementById("savePopup").classList.toggle("active");
 }
 
+function saveIntoDatabase() {
+    const name = document.getElementById("name").value || "pixel-art";
+    const description = document.getElementById("description").value || "";
+    const scale = document.getElementById("size").value || 1;
+
+    saveImageIntoFirebase(pixelData, name, description);
+}
+
 // Event Listeners
-document.getElementById("saveButton").addEventListener("click", toggleSavePopup);
+document.getElementById("exportButton").addEventListener("click", toggleSavePopup);
+document.getElementById("saveIntoDatabaseButton").addEventListener("click", saveIntoDatabase);
 document.getElementById("cancelExportButton").addEventListener("click", toggleSavePopup);

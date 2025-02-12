@@ -248,6 +248,7 @@ function toggleFillMode() {
 }
 
 // Add event listeners
+document.getElementById("saveButton").addEventListener("click", toggleSavePopup);
 document.getElementById("moveButton").addEventListener("click", toggleMoveMode);
 document.getElementById("fillButton").addEventListener("click", toggleFillMode);
 document.getElementById("clearButton").addEventListener("click", clearCanvas);
