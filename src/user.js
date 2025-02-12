@@ -23,7 +23,10 @@ firebaseHandler.auth.onAuthStateChanged(user => {
         userInfo.style.display = 'flex';
         userEmail.textContent = user.email;
         loginButton.style.display = 'none';
-        creatorLink.style.display = 'block';
+
+        userData.email = user.email;
+        userData.displayName = user.displayName;
+        userData.photoURL = user.photoURL;
     } else {
         // User is logged out
         userInfo.style.display = 'none';
@@ -32,55 +35,20 @@ firebaseHandler.auth.onAuthStateChanged(user => {
     }
 });
 
-// Open Login Popup
-loginButton.addEventListener('click', () => {
-    loginPopup.style.display = 'flex';
-});
-
-// Close Login Popup
-closePopup.addEventListener('click', () => {
-    loginPopup.style.display = 'none';
-});
-
-// Login with Email/Password
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-
+// Login with google
+loginButton.addEventListener('click', async () => {
     try {
-        await firebaseHandler.signInWithEmail(email, password);
-        loginError.textContent = '';
+        const user = await firebaseHandler.googleSignIn();
         loginPopup.style.display = 'none';
-    } catch (error) {
-        loginError.textContent = error.message;
-    }
-});
 
-// Register with Email/Password
-registerForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-
-    try {
-        await firebaseHandler.signUpWithEmail(email, password);
-        registerError.textContent = '';
-        loginPopup.style.display = 'none';
-    } catch (error) {
-        registerError.textContent = error.message;
-    }
-});
-
-// Google Sign-In
-googleSignInButton.addEventListener('click', async () => {
-    try {
-        await firebaseHandler.googleSignIn();
-        loginPopup.style.display = 'none';
+        userData.email = user.email;
+        userData.displayName = user.displayName;
+        userData.photoURL = user.photoURL;
     } catch (error) {
         console.error('Google Sign-In Error:', error);
     }
 });
+
 
 // Logout
 logoutButton.addEventListener('click', async () => {
