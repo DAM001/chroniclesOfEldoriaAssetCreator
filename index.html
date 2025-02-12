@@ -4,59 +4,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chronicles of Eldoria - Pixel Art Creator</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Pixel Art Creator</title>
+    <link rel="stylesheet" href="./style/styles.css">
+    <link rel="stylesheet" href="./style/gallery.css">
+    <link rel="stylesheet" href="./style/draw.css">
 </head>
 
 <body>
-    <h1>Chronicles of Eldoria - Pixel Art Creator</h1>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h1>Pixel Art Creator</h1>
+        <div id="user-info" style="display: none;">
+            <span id="user-email"></span>
+            <button id="logout-button">Logout</button>
+        </div>
+        <button id="login-button">Login</button>
+    </div>
 
-    <div class="controls">
-        <div class="dropdown">
-            <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
-            <div class="dropdown-content">
-                <a href="#" data-size="8">8x8 (Tools)</a>
-                <a href="#" data-size="16">16x16 (Mobs)</a>
+    <!-- Login Popup -->
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <div id="auth-container">
+                <!-- Login Form -->
+                <form id="login-form">
+                    <h2>Login</h2>
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                    <p id="login-error" class="error-message"></p>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form">
+                    <h2>Register</h2>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                    <p id="register-error" class="error-message"></p>
+                </form>
+
+                <!-- Google Sign-In Button -->
+                <button id="google-signin">Sign in with Google</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="gallery-container" class="gallery-container">
+        <div id="gridContainer" class="gallery-container">
+            Loading data from Firebase...
+        </div>
+        <button id="create-button">Create</button>
+    </div>
+
+    <!-- Drawing container -->
+    <div id="drawing-container">
+        <div class="controls">
+            <div class="dropdown" title="Change grid size">
+                <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
+                <div class="dropdown-content">
+                    <a href="#" data-size="8">8x8 (Tools)</a>
+                    <a href="#" data-size="16">16x16 (Mobs)</a>
+                </div>
+            </div>
+
+            <input type="file" id="loadImageInput" accept="image/png" style="display: none;" />
+            <button id="loadImageButton" title="Load Asset"><img src="../assets/icons/load.png" alt=""></button>
+
+            <button id="undoButton" title="Undo"><img src="../assets/icons/undo.png" alt=""></button>
+            <button id="redoButton" title="Redo"><img src="../assets/icons/redo.png" alt=""></button>
+            <button id="fillButton" title="Fill Tool"><img src="../assets/icons/fill.png" alt=""></button>
+            <button id="moveButton" title="Move Tool"><img src="../assets/icons/move.png" alt=""></button>
+            <button id="clearButton" title="Clear Canvas"><img src="../assets/icons/clear.png" alt=""></button>
+            <button id="saveButton" title="Save"><img src="../assets/icons/save.png" alt=""></button>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid"></div>
+        </div>
+        <div class="palette"></div>
+
+        <div id="savePopup" class="popup">
+            <h1>Save settings</h1>
+            <label for="name">File name</label>
+            <input type="text" id="name" placeholder="Enter image name">
+            <label for="size">Export scale</label>
+            <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
+            <label for="description">Description (metadata)</label>
+            <textarea id="description" placeholder="Enter image description"></textarea>
+            <div class="controls">
+                <button id="exportButton">Export</button>
+                <button id="cancelExportButton">Cancel</button>
             </div>
         </div>
 
-        <input type="file" id="loadImageInput" accept="image/png" style="display: none;" />
-        <button id="loadImageButton"><img src="./assets/icons/load.png" alt=""></button>
-        
-        <button id="undoButton"><img src="./assets/icons/undo.png" alt=""></button>
-        <button id="redoButton"><img src="./assets/icons/redo.png" alt=""></button>
-        <button id="fillButton"><img src="./assets/icons/fill.png" alt=""></button>
-        <button id="moveButton"><img src="./assets/icons/move.png" alt=""></button>
-        <button id="clearButton"><img src="./assets/icons/clear.png" alt=""></button>
-        <button id="saveButton"><img src="./assets/icons/save.png" alt=""></button>
+        <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
     </div>
 
-    <div class="grid-container">
-        <div class="grid"></div>
-    </div>
-    <div class="palette"></div>
-    
-    <div id="savePopup" class="popup">
-        <h1>Save settings</h1>
-        <label for="name">File name</label>
-        <input type="text" id="name" placeholder="Enter image name">
-        <label for="size">Export scale</label>
-        <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
-        <label for="description">Description (metadata)</label>
-        <textarea id="description" placeholder="Enter image description"></textarea>
-        <div class="controls">
-            <button id="exportButton">Export</button>
-            <button id="cancelExportButton">Cancel</button>
-        </div>
-    </div>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
 
-    <canvas id="canvas" width="320" height="320" style="display: none;"></canvas>
-    
-    <script src="./src/metadata.js"></script>
-    <script src="./src/history.js"></script>
-    <script src="./src/script.js"></script>
-    <script src="./src/assetType.js"></script>
-    <script src="./src/loadImage.js"></script>
+    <!-- Gallery files -->
+    <script src="./src/config.js"></script>
+    <script src="./src/firebaseHandler.js"></script>
+    <script src="./src/firebaseConfig.js"></script>
+    <script src="./src/user.js"></script>
+    <script src="./src/gallery/gallery.js"></script>
+
+    <!-- Draw files -->
+    <script src="./src/draw/metadata.js"></script>
+    <script src="./src/draw/history.js"></script>
+    <script src="./src/draw/script.js"></script>
+    <script src="./src/draw/assetType.js"></script>
+    <script src="./src/draw/loadImage.js"></script>
+
 </body>
 
 </html>

@@ -1,4 +1,3 @@
-const colors = ["#000000", "#1abc9c", "#16a085", "#2ecc71", "#27ae60", "#3498db", "#2980b9", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1", "#bdc3c7", "#95a5a6", "#7f8c8d"];
 const grid = document.querySelector(".grid");
 const palette = document.querySelector(".palette");
 let selectedColor = colors[0]; // Default to black
@@ -255,3 +254,21 @@ document.getElementById("clearButton").addEventListener("click", clearCanvas);
 document.getElementById("exportButton").addEventListener("click", exportImage);
 document.addEventListener("mousedown", startMove);
 document.addEventListener("touchstart", startMove);
+
+
+// Helper functions
+function getPixelArray() {
+    return pixelData.map(color => {
+        let index = colors.indexOf(color);
+        return index !== -1 ? index : -1;
+    });
+}
+
+function loadPixelArray(loadData) {
+    if (!Array.isArray(loadData)) return;
+    pixelData = loadData.map(index => (colors[index] !== undefined ? colors[index] : null));
+    updateGrid();
+}
+
+
+const testPixelArrayData = [-1, -1, -1, 7, -1, -1, -1, -1, -1, -1, -1, 7, 7, -1, -1, -1, -1, 0, 0, -1, 7, -1, -1, -1, -1, -1, 0, 0, 7, -1, -1, -1, -1, -1, -1, -1, 0, 7, 6, -1, -1, -1, -1, -1, 6, 7, -1, -1, -1, -1, -1, 6, 6, 7, 7, -1, -1, -1, -1, -1, -1, -1, -1, -1];
