@@ -23,10 +23,14 @@
 
     <!-- Main Content -->
     <div id="gallery-container" class="gallery-container">
+        <div class="gallery-hero">
+            <img src="./assets/logoDark.png" alt="Chronicles of Eldoria logo">
+            <p>Unleash your creativity in the official pixel art creator for Chronicles of Eldoria! Design 8x8 tools and 16x16 entities (mobs, interactables) to shape the world of Eldoria. Vote on your favorites, give a thumbs down to the flops, and watch as the best creations make it into the game. Your art, your legacy, start forging today!</p>
+            <button id="create-button">Create</button>
+        </div>
         <div id="gridContainer" class="gallery-items-container">
             Loading data from Firebase...
         </div>
-        <button id="create-button">Create</button>
     </div>
 
     <!-- Drawing container -->
@@ -35,7 +39,7 @@
             <button id="backButton" title="Back"><img src="./assets/icons/back.png" alt=""></button>
 
             <div class="dropdown" title="Change grid size">
-                <button id="gridSizeButton">Grid Size: <span id="currentGridSize">16x16</span></button>
+                <button id="gridSizeButton"><img src="./assets/icons/gridBig.png" alt=""></button>
                 <div class="dropdown-content">
                     <a href="#" data-size="8">8x8 (Tools)</a>
                     <a href="#" data-size="16">16x16 (Mobs)</a>

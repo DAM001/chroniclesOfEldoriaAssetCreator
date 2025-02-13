@@ -12,7 +12,8 @@ function changeGridSize(size) {
     saveState(); // Save the new state
 
     // Update the dropdown button text
-    document.getElementById("currentGridSize").textContent = `${GRID_SIZE}x${GRID_SIZE}`;
+    if (GRID_SIZE === 16) document.getElementById("gridSizeButton").querySelector("img").src = "./assets/icons/gridBig.png";
+    else document.getElementById("gridSizeButton").querySelector("img").src = "./assets/icons/gridSmall.png";
 }
 
 // Update the grid creation logic
