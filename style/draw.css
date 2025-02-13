@@ -9,9 +9,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: #fff;
     user-select: none;
     margin: 0;
     padding: 10px;
@@ -29,18 +26,6 @@ label {
 }
 
 button {
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background: #3498db;
-    color: white;
-    font-size: 16px;
-    border-radius: 5px;
-    margin: 5px;
-
-    &:hover {
-        background: #2980b9;
-    }
 
     &:has(img) {
         padding: 8px;
@@ -78,12 +63,13 @@ textarea {
 }
 
 .grid-container {
-    background: #ffffff;
     padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-width: 100%;
     overflow: auto;
+
+    box-shadow: 
+    inset -5px -5px 0px var(--dark-edge),
+    inset 5px 5px 0px var(--light-edge);
 }
 
 .grid {
@@ -91,7 +77,6 @@ textarea {
     grid-template-columns: repeat(var(--grid-size), var(--pixel-size));
     grid-template-rows: repeat(var(--grid-size), var(--pixel-size));
     background: repeating-conic-gradient(#e0e0e0 0% 25%, #cccccc 0% 50%) 0 0 / var(--pixel-size) var(--pixel-size);
-    border-radius: 6px;
     overflow: hidden;
 }
 
@@ -100,10 +85,10 @@ textarea {
     height: var(--pixel-size);
     background: transparent;
     cursor: crosshair;
+    z-index: 100;
 
     &:hover {
-        border: 2px solid white;
-        border-radius: 5px;
+        border: 2px solid var(--dark-edge);
         margin: -2px;
         z-index: 100;
     }
@@ -112,6 +97,7 @@ textarea {
 .controls {
     display: flex;
     flex: 0;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
     margin: 0 0 10px;
@@ -132,18 +118,21 @@ textarea {
     width: 30px;
     height: 30px;
     cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 4px;
+
+    box-shadow: 
+    inset -3px -3px 0px var(--dark-edge),
+    inset 3px 3px 0px var(--light-edge);
 }
 
 .selected {
-    border: 2px solid #fff;
+    box-shadow: 
+    inset -3px -3px 0px var(--light-edge),
+    inset 3px 3px 0px var(--dark-edge);
 }
 
 .erase {
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="gray" d="M3 12l9-9 9 9-9 9-9-9z"/></svg>') center/contain no-repeat;
     background-color: #1e1e1e;
-    border: 2px solid gray;
 }
 
 @media (max-width: 768px) {
@@ -165,11 +154,10 @@ textarea {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     z-index: 1000;
 
@@ -179,6 +167,32 @@ textarea {
     &.active {
         display: flex;
         pointer-events: all;
+    }
+}
+
+.popupBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 10px;
+    background: var(--background-color);
+
+    box-shadow: 
+    inset -3px -3px 0px var(--dark-edge),
+    inset 3px 3px 0px var(--light-edge);
+
+    h1 {
+        background: var(--header-color);
+        width: calc(100% + 14px);
+        padding: 5px 0;
+        margin: -6px -6px 10px;
+    }
+
+    label {
+        color: var(--text-dark-color);
+        font-weight: 700;
     }
 }
 

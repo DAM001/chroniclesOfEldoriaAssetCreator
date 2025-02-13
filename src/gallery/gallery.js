@@ -34,6 +34,10 @@ window.onload = function() {
             // Append canvas to the card
             card.appendChild(canvas);
 
+            // Add devider line
+            const devider = document.createElement('hr');
+            card.appendChild(devider);
+
             // Add file description
             const fileDescription = document.createElement('p');
             fileDescription.textContent = `Description: ${data.description}`;

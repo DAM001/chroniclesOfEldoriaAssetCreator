@@ -1,17 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root {
+    --header-color: #090069;
+    --text-color: #f0f0f0;
+    --text-dark-color: #282c2e;
+    --background-color: #aeaeae;
+    --background-dark-color: #686868;
+
+    --theme-color: #0200fe;
+    --theme-color-hover: #0000a3;
+    --dark-edge: #424649;
+    --light-edge: #dfe3e4;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
+    font-family: "Arimo", serif;
+    color: var(--text-color);
+    background-color: var(--background-dark-color);
     margin: 0;
+}
+  
+button {
+    color: var(--text-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+    background-color: var(--theme-color);
+
+    &:hover {
+        background-color: var(--theme-color-hover);
+    }
+
+    box-shadow: 
+        inset -2px -2px 0px var(--dark-edge),
+        inset 2px 2px 0px var(--light-edge);
+}
+
+hr {
+    border: 1px solid var(--dark-edge);
 }
 
 .top-bar {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--header-color);
+    color: var(--text-color);
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 0px var(--dark-edge);
     position: fixed;
     width: calc(100% - 40px);
     z-index: 1000;
@@ -34,11 +71,6 @@ body {
 
 #logout-button {
     background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 #logout-button:hover {
@@ -47,11 +79,6 @@ body {
 
 #login-button {
     background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 #login-button:hover {
@@ -73,11 +100,5 @@ body {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007bff;
     font-size: 20px;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
 }

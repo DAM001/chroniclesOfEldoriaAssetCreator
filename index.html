@@ -59,17 +59,19 @@
         <div class="palette"></div>
 
         <div id="savePopup" class="popup">
-            <h1>Save settings</h1>
-            <label for="name">File name</label>
-            <input type="text" id="name" placeholder="Enter image name">
-            <label for="description">Description (metadata)</label>
-            <textarea id="description" placeholder="Enter image description"></textarea>
-            <label for="size">Export scale</label>
-            <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
-            <div class="controls">
-                <button id="exportButton">Export</button>
-                <button id="saveIntoDatabaseButton">Save</button>
-                <button id="cancelExportButton">Cancel</button>
+            <div class="popupBackground">
+                <h1>Save settings</h1>
+                <label for="name">File name</label>
+                <input type="text" id="name" placeholder="Enter image name">
+                <label for="description">Description (metadata)</label>
+                <textarea id="description" placeholder="Enter image description"></textarea>
+                <label for="size">Export scale</label>
+                <input type="number" id="size" placeholder="Enter image size" min="1" max="50" value="1">
+                <div class="controls">
+                    <button id="exportButton">Download Image</button>
+                    <button id="saveIntoDatabaseButton">Save into database</button>
+                    <button id="cancelExportButton">Back</button>
+                </div>
             </div>
         </div>
 

@@ -8,28 +8,31 @@
 }
 
 .card {
-    background-color: #111;
-    color: #fff;
-    border: 3px solid #999;
+    background-color: var(--background-color);
     padding: 5px 10px;
     text-align: left;
-    border-radius: 10px;
+
+    box-shadow: 
+    inset -3px -3px 0px var(--dark-edge),
+    inset 3px 3px 0px var(--light-edge);
 
     h2 {
-        margin: 0 0 5px;
+        margin: -2px -7px 0;
+        padding: 5px;
         text-align: center;
+        background: var(--header-color);
     }
 
     p {
         margin: 5px 0;
+        color: var(--text-dark-color);
+        font-weight: 700;
     }
 
     canvas {
-        background-color: #fff;
-        margin: 0 -12px;
-        border: 2px solid #999;
         image-rendering: pixelated;
-        width: calc(100% + 20px);
+        margin: 15px;
+        width: calc(100% - 30px);
         height: auto;
     }
 }

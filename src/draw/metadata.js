@@ -71,7 +71,6 @@ function toggleSavePopup() {
 function saveIntoDatabase() {
     const name = document.getElementById("name").value || "pixel-art";
     const description = document.getElementById("description").value || "";
-    const scale = document.getElementById("size").value || 1;
 
     saveImageIntoFirebase(pixelData, name, description);
 }
