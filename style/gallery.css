@@ -1,8 +1,25 @@
 .gallery-hero {
-    margin: 60px;
+    margin: 60px auto 120px;
+    max-width: 600px;
+
+    background-color: #0a0006;
+    padding: 3px;
+    text-align: left;
+
+    box-shadow: 
+        inset -3px -3px 0px var(--dark-edge),
+        inset 3px 3px 0px var(--light-edge);
+
+    h2 {
+        margin: 0;
+        padding: 5px;
+        text-align: center;
+        background: var(--header-color);
+    }
 
     p {
         font-size: 18px;
+        margin: 5px 10px;
     }
 
     img {
@@ -34,14 +51,15 @@
     text-align: left;
 
     box-shadow: 
-    inset -3px -3px 0px var(--dark-edge),
-    inset 3px 3px 0px var(--light-edge);
+        inset -3px -3px 0px var(--dark-edge),
+        inset 3px 3px 0px var(--light-edge);
 
     h2 {
         margin: -2px -7px 0;
         padding: 5px;
         text-align: center;
         background: var(--header-color);
+        box-shadow: 0 3px 0px var(--dark-edge);
     }
 
     p {

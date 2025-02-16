@@ -27,6 +27,9 @@ firebaseHandler.auth.onAuthStateChanged(user => {
         userData.email = user.email;
         userData.displayName = user.displayName;
         userData.photoURL = user.photoURL;
+
+        // enable save button
+        document.getElementById("saveIntoDatabaseButton").disabled = false;
     } else {
         // User is logged out
         userInfo.style.display = 'none';
@@ -44,6 +47,9 @@ loginButton.addEventListener('click', async () => {
         userData.email = user.email;
         userData.displayName = user.displayName;
         userData.photoURL = user.photoURL;
+
+        // enable save button
+        document.getElementById("saveIntoDatabaseButton").disabled = false;
     } catch (error) {
         console.error('Google Sign-In Error:', error);
     }
@@ -54,6 +60,9 @@ loginButton.addEventListener('click', async () => {
 logoutButton.addEventListener('click', async () => {
     try {
         await firebaseHandler.signOut();
+
+        // enable save button
+        document.getElementById("saveIntoDatabaseButton").disabled = true;
     } catch (error) {
         console.error('Logout Error:', error);
     }

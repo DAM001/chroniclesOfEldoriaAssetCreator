@@ -28,17 +28,69 @@ button {
     border-radius: 0;
     background-color: var(--theme-color);
 
+    box-shadow: 
+    inset -3px -3px 0px var(--dark-edge),
+    inset 3px 3px 0px var(--light-edge);
+
+    &:has(img) {
+        padding: 8px;
+        width: 40px;
+        height: 40px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &.active, &:active {
+        background: var(--theme-color-hover);
+        box-shadow: 
+            inset -3px -3px 0px var(--light-edge),
+            inset 3px 3px 0px var(--dark-edge);
+    }
+
     &:hover {
         background-color: var(--theme-color-hover);
     }
 
-    box-shadow: 
-        inset -2px -2px 0px var(--dark-edge),
-        inset 2px 2px 0px var(--light-edge);
+    &:disabled, &:disabled:active {
+        background-color: var(--background-dark-color);
+    }
 }
 
 hr {
     border: 1px solid var(--dark-edge);
+}
+
+input,
+textarea {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 0;
+    background: #1e1e1e;
+    color: #fff;
+    width: calc(100% - 40px);
+    max-width: var(--max-width);
+    outline: none;
+
+    box-shadow: 
+        inset -3px -3px 0px var(--dark-edge),
+        inset 3px 3px 0px var(--light-edge);
+
+        &:focus {
+            box-shadow: 
+                inset -3px -3px 0px var(--light-edge),
+                inset 3px 3px 0px var(--dark-edge);
+        }
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+    height: 100px;
+    max-height: 400px;
 }
 
 .top-bar {
@@ -48,7 +100,7 @@ hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 0px var(--dark-edge);
+    box-shadow: 0 3px 0px var(--dark-edge);
     position: fixed;
     width: calc(100% - 40px);
     z-index: 1000;
